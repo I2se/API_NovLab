@@ -1,0 +1,30 @@
+{
+  "name": "api_novlab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sothis04/API_NovLab.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sothis04/API_NovLab/issues"
+  },
+  "homepage": "https://github.com/Sothis04/API_NovLab#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongodb": "^4.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "eslint-plugin-react": "^7.27.1",
+    "prettier": "^2.5.1"
+  }
+}
