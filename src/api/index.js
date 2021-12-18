@@ -1,8 +1,8 @@
 const socketIO = require('socket.io')
 const api_keys = require('../../api_keys.json')
 
-const heartbeat = require('../heartbeat')
-const users = require('../users')
+const heartbeat = require('./heartbeat')
+const users = require('./users')
 
 module.exports = function (server) {
     const io = socketIO(server)
@@ -10,7 +10,7 @@ module.exports = function (server) {
     io.use((socket, next) => {
         try {
             const { app_type, api_key} = socket.handshake.auth
-
+            
             if (api_keys[app_type] !== undefined) {
                 if (api_keys[app_type].includes(api_key)) {
                     next()

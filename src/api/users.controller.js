@@ -3,8 +3,8 @@ const { response } = require('./utils')
 
 module.exports = class UsersController {
 
-  static async create(socket, appType) {
-    return (requestId, discordId) => {
+  static create(socket, appType) {
+    return async (requestId, discordId) => {
       try {
         if (appType !== 'bot') {
           socket.emit('users:create', response(requestId, 401, { error: 'You are not allowed to do this action.' }))
@@ -34,8 +34,8 @@ module.exports = class UsersController {
     }
   }
 
-  static async delete(socket, appType) {
-    return (discordId) => {
+  static delete(socket, appType) {
+    return async (discordId) => {
       try {
         if (appType !== 'bot') {
           socket.emit('users:delete', response(requestId, 401, { error: 'You are not allowed to do this action.' }))
@@ -55,8 +55,8 @@ module.exports = class UsersController {
     }
   }
 
-  static async get(socket, appType) {
-    return (discordId) => {
+  static get(socket, appType) {
+    return async (discordId) => {
       try {
         const userFromDB = await UsersDAO.getUser(discordId)
         if (!deleteResult.success) {
@@ -68,7 +68,6 @@ module.exports = class UsersController {
       } catch (err) {
         socket.emit('users:get', response(requestId, 500, { error: err }))
       }
-    }
     }
   }
 }

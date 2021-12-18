@@ -1,6 +1,4 @@
 const app = require('./server')
-const http = require('http').Server(app)
-const io = require('./api')(http)
 const { MongoClient } = require('mongodb')
 const UsersDAO = require('./dao/usersDAO')
 
@@ -17,7 +15,9 @@ MongoClient.connect(
     // Init DAO
     await UsersDAO.injectDB(client)
 
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
         console.log(`NovLab | Listening on port ${port}.`)
     })
+    
+    const io = require('./api/index')(server)
 })

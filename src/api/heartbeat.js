@@ -12,7 +12,7 @@ function generateRandomString(length) {
    return result;
 }
 
-module.expors = function (socket) {
+module.exports = function (socket) {
     const loop = setInterval(() => {
         if (socket.disconnected) {
             clearInterval(loop)
@@ -25,7 +25,12 @@ module.expors = function (socket) {
         }, 60 * 1000)
         const question = generateRandomString(16)
 
-        socket.on('heartbeat:answer', (requestId, answer) => {
+        socket.once('heartbeat:answer', (requestId, answer) => {
+            console.log('Received ', answer)
+            console.log('Asked for', question)
+            console.log(typeof answer)
+            clearTimeout(timeout)
+            
             if (answer !== question) {
                 socket.emit('heartbeat:answer', response(requestId, 500, { error: 'Answer was wrong.' }))
                 socket.disconnect()
@@ -36,8 +41,8 @@ module.expors = function (socket) {
 
         socket.emit('heartbeat:request', {
             msg: 'Answer is requested.', 
-            timeLeft: 60 * 1000,
+            timeLeft: 10 * 1000,
             question: question
         })
-    }, 5 * 60 * 1000)
+    }, 2 * 1000)
 }
