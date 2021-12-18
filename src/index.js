@@ -1,4 +1,6 @@
 const app = require('./server')
+const http = require('http').Server(app)
+const io = require('./api')(http)
 const { MongoClient } = require('mongodb')
 const UsersDAO = require('./dao/usersDAO')
 

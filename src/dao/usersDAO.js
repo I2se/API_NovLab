@@ -28,9 +28,7 @@ module.exports = class UsersDAO {
      */
     static async addUser(userInfo) {
         try {
-            await users.insertOne({ 
-                discordId: userInfo.discordId
-            }, { w: 'majority' })
+            await users.insertOne(userInfo, { w: 'majority' })
             return { success: true }
         } catch (err) {
             console.error(`Error occured while adding new user: ${e}`)
@@ -62,10 +60,11 @@ module.exports = class UsersDAO {
 /**
  * @typedef UserInfo
  * @property {string} discordId
+ * @property {Date} creationDate
  */
 
- /**
-  * @typedef DAOResponse
-  * @property {boolean} [success]
-  * @property {string} [error]
-  */
+/**
+ * @typedef DAOResponse
+ * @property {boolean} [success]
+ * @property {string} [error]
+ */
