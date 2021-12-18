@@ -1,4 +1,3 @@
 # Git ignore
 node_modules
 .gitattributes
-.env
