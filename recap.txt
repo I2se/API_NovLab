@@ -1,0 +1,44 @@
+// Data :
+
+Users:
+- Discord Id
+- Guilds
+- Playlists
+
+Guilds:
+- Language
+- Volume 
+- Queue
+- RoleDJ
+- Repeating
+
+
+// Request :
+
+User:
+- Create User
+- Delete User
+- Get User
+- Update User : 
+    Playlist:
+    - Create Playlist
+    - Delete Playlist
+    - Get Playlist
+    - Update Playlist
+    Guilds:
+    - Add Guilds
+    - Remove Guilds
+
+Guilds:
+- Update Language
+- Update Volume
+- Update RoleDJ
+- Update Repeating
+- Update Queue:
+    Queue:
+    - Add to Queue
+    - Remove From Queue
+    - List Queue
+    - Get Queue
+    - Create Queue
+    - Delete Queue

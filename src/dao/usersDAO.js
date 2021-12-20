@@ -25,6 +25,7 @@ module.exports = class UsersDAO {
 
     /**
      * @param {UserInfo} userInfo
+     * @returns {DAOResponse}
      */
     static async addUser(userInfo) {
         try {

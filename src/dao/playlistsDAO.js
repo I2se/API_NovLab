@@ -14,8 +14,28 @@ module.exports = class PlaylistsDAO {
       } 
   }
 
+  /**
+   * @property {Playlist} playlist
+   * @returns {DAOResponse}
+   */
+  static async createPlaylist(playlist) {
+    try {
+        await playlists.insertOne(playlist, { w: 'majority' })
+        return { success: true }
+    } catch (err) {
+        console.error(`Error occured while creating new playlist: ${e}`)
+        return { error: err }
+    }
+  }
+
+  /**
+   * @property {string} name
+   * @property {number} page
+   * @property {number} playlistsPerPage
+   * @returns {Playlist[]}
+   */
   static async getPlaylistsByName(name, page = 0, playlistsPerPage = 20) {
-    return await playlist
+    return await playlists
       .find({
         $text: {
           $search: name
@@ -38,6 +58,10 @@ module.exports = class PlaylistsDAO {
       .toArray()
   }
 
+  /**
+   * @property {string} id
+   * @returns {Playlist}
+   */
   static async getPlaylistById(id) {
     try {
       return await playlists.aggregate(
@@ -53,19 +77,66 @@ module.exports = class PlaylistsDAO {
       throw err
     }
   }
+
+  static async deletePlaylist(id) {
+    try {
+        await playlists.deleteOne({ id })
+
+        if (!(await this.getPlaylistById(id))) {
+            return { success: true } 
+        } else {
+            console.error('Deletion unsuccessful')
+            return { error: 'Deletion unsuccessful' }
+        }
+    } catch (err) {
+        console.error(`Error occured while deleting playlist: ${e}`)
+        return { error: err }
+    }
+  }
+
+  static async editPlaylist(id, name, description, content, updateDate) {
+    try {
+      const updateResponse = await playlists.updateOne(
+        { 
+          _id: ObjectId(id)
+        },
+        { 
+          $set: { 
+            name: name,
+            description: description,
+            content: content,
+            lastUpdateDate: updateDate
+          } 
+      },
+      )
+
+      return updateResponse
+    } catch (e) {
+      console.error(`Unable to update playlist: ${e}`)
+      return { error: e }
+    }
+  }
 }
 
 /**
 * @typedef Playlist
 * @property {string} name
 * @property {string} description
+* @property {Author} author
 * @property {string[]} content
 * @property {Date} creationDate
 * @property {Date} lastUpdateDate
 */
 
 /**
+ * @typedef Author
+ * @property {"guild" | "user"} type
+ * @property {string} name 
+ */
+
+/**
 * @typedef DAOResponse
 * @property {boolean} [success]
 * @property {string} [error]
+
 */
